@@ -1,0 +1,40 @@
+1.mybatis的主配置文件
+    提供mybatis全局设置。包含的内容日志，数据源，mapper文件位置
+2.mybatis的mapper文件
+    写SQL语句的，一个表一个mapper文件
+
+5.1 settings部分
+    <setting>是mybatis的全局设置，影响整个mybatis的运行，这个设置一般使用默认值就可以
+5.2 typeAliases别名（可用可不用）：
+5.3 environment 配置环境：
+    environments（环境标签），在这里面可以配置多个environment
+    environment：表示一个数据库连接的相关信息。
+        属性: id 自定义的环境的标识。唯一值。
+        属性: default 必须是某个environment的id属性值。表示mybatis默认连接的数据库（mybatis同一时刻只能连接一个数据库）
+        transactionManger:事务管理器
+            属性：type 标识事务管理器的类型
+            属性值：1.JDBC:使用Connection对象，由mybatis自己完成事务的处理
+                  2.Managed:管理 表示事务的处理工作提交给容器实现（由其他软件完成事务的提交，回滚）
+        dataSource  数据源 创建的Connection独享，连接数据库
+            属性：
+                1.type 数据源的类型
+                    属性值：1.POOLED ,mybatis会在内存中创建pooledDataSource类，管理多个Connection对象
+                           2.UNPOOLED,表示不使用连接池 mybatis创建一个UnPooledDataSources这个类，每次执行的时候先创建Connection对象，最后关闭
+                           3.JNDI:java的命名和目录事务
+5.4 使用数据库属性配置文件
+     需要把数据库的配置信息放到一个单独的文件中，独立管理，这个文件的扩展名是properties，使用自定义的key=value的格式表示数据
+        jdbc.url=jdbc:mysql://localhost:3306/ssm
+5.5 mapper标签
+    使用mapper指定其他mapper文件的位置
+    格式：
+        1.mapper resource="文件的路径":指定文件的路径
+            优点：文件清晰，加载的文件是明确的，文件的位置比较灵活
+            缺点：文件比较多，文件的指定比较复杂（代码量大），管理难度大
+        2.package name="包名"：mapper文件所在的包名
+            特点：把这个包中的所有mapper文件，一次加载。
+            使用要求：
+                1.mapper文件和dao接口在同一目录。
+                2.mapper文件和dao接口的名称完全一致。
+
+
+

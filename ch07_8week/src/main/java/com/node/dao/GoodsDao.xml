@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.node.dao.GoodsDao">
+    <!-- 使用insert,update,delete,select等标签写sql-->
+    <insert id="insertGoods">
+        insert into goods(Id,name,area) values(#{id},#{name},#{area})
+    </insert>
+    <select id="selectGoods" resultType="com.node.domain.Goods">
+        select * from goods
+    </select>
+</mapper>

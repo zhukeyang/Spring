@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        <bean class="atguigu.impl.MyMath.Calculator" id="calculator">
+
+        </bean>
+        <bean class="atguigu.util.LogUtils" id="logUtils">
+
+        </bean>
+    <aop:config>
+<!--        指定切面-->
+        <aop:aspect ref="logUtils">
+            <aop:pointcut id="pointcut" expression="execution(* com.atguigu.impl.MyMath.*.*(..))"/>
+<!--            配置哪个方法是前置通知，method指定方法名-->
+            <aop:before method="logStart" pointcut-ref="pointcut"/>
+            <aop:after-returning method="logReturn" pointcut-ref="pointcut" returning="result"/>
+            <aop:after-throwing method="logException" pointcut-ref="pointcut" throwing="e"/>
+            <aop:after method="logEnd" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+<!--    -->
+</beans>

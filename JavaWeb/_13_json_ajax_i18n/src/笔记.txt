@@ -1,0 +1,23 @@
+JSON的定义：
+	json是由键值对组成，并且由花括号（大括号）包围。每个键由引号引起来，键和值之间使用冒号进行分割
+	多组键值对之间使用逗号进行分割。
+JSON的访问：
+    json本身是一个对象
+    json中的key我们可以理解为是对象中的一个属性
+    json中的key访问就跟访问对象的属性一样：json对象.key
+JSON的两个常用方法：
+    json的存在两种形式：
+        1.对象的形式（json对象）
+        2.字符串的形式（json字符串）
+        一般我们操作JSON中的数据的时候，需要JSON对象的格式。
+        一般我们要在客户端和服务器之间进行数据交换的时候，使用JSON字符串。
+    JSON.stringify():把json对象转换成json字符串
+    JSON.parse()：把json字符串转换成json对象
+JSON在java中的使用：
+    1.javaBean和json的互转
+    2.List和JSON的互转
+    3.map和json的互转
+    先有gosn的对象实例，调用toJson（）方法转换
+Ajax请求：
+    是一种创建交互式网页应用的网页开发技术。
+    是一种浏览器通过js异步发生请求,局部更新的页面。

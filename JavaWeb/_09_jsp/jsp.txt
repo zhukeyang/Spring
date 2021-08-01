@@ -1,0 +1,91 @@
+jsp:
+    Java的服务器页面
+    jsp的主要作用是代替Servlet程序回传html页面的数据、
+小结：
+    jsp如何访问：
+        jsp页面和html页面一样，都是存放在web目录下，访问也和访问html一样
+jsp本质：
+    是一个servlet程序
+    当我们第一次访问jsp页面时，Tomcat服务器会帮我们把jsp页面翻译成一个java源文件，并且把它编译成.class源文件
+    jsp翻译出来的类，它间接的继承了HTTPservlet类，翻译出来的时一个Servlet程序。
+page指令：
+    page指令可以修改jsp页面中一些重要的属性，或者行为
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    language：语言只支持java
+    contentType:表示返回的数据类型
+    buffer：缓冲区 （out缓冲区满了不能刷新）
+    extends jsp翻译过来的java代码默认继承....
+jsp常用的脚本：
+    声明脚本格式：<%!  声明javａ代码  %>
+  ✳表达式脚本（常用）：
+    格式：
+        <%=表达式%>
+    作用：
+        在jsp页面上输出数据.
+    特点：
+        1.所有的表达式脚本都会被翻译到_jspService方法中
+        2.表达式脚本都会被翻译成out.print()输出到页面上
+        3.由于表达式脚本翻译的内容都在_jspService（）方法中，所以_jspService方法中的东西都可以直接使用
+        4.表达式脚本中的表达式不能以分号结束
+代码脚本：
+    <% Java语句%>
+    作用：
+        在jsp页面中，编写我们自己需要的功能（Java语句）
+    特点：
+        1.代码脚本翻译之后都在_jspService中
+        2.代码脚本由于翻译到_jspService()方法中，所以在_jspService()方法中的所有对象都可以直接使用
+        3.还可以由多个代码脚本块组合完成一个java语句
+        4.代码脚本还可以和表达式脚本一起组合， .
+jsp中的三种注释：
+    1.html注释
+        会被翻译到Java源代码中。在_jspService方法里，以out.writer输出到客户端
+    2.java注释
+        Java注释会被翻译到java源代码中。
+    3.jsp注释
+        jsp注释可以注掉jsp页面的所有代码
+jsp九大内置对象：
+    jsp的内置对象：Tomcat提供的内部对象
+     request:请求对象
+     response：响应对象
+     pageContext：jsp的上下文对象
+     session：会话对象
+     application：servletContext对象
+     config：Servlet Config对象
+     out：输出流对象
+     page：指向当前jsp的对象
+     exception：异常对象
+jsp四大域对象：
+    PageContext(PageContextimpl类)   当前jsp页面内有效
+    request(HttpServletRequest)      一次请求内有效
+    Session(Httpsession)             一个会话范围内有效（打开浏览器访问服务器，直到关闭浏览器）
+    application(ServletContext)      web工程范围内有效（只要web工程不停止，数据一直有效）
+    域对象是可以像Map一样存取数据的对象。四个域对象功能一样。不同的是他们对数据的存取范围
+    顺序：
+        pageContext==>request==>session==>application
+jsp常用标签：
+    静态包含:
+        <%@ include file =""%>
+    特点：
+        1.静态包含不会翻译被包含的jsp页面
+        2.静态包含其实是把被包含的jsp页面的代码拷贝到包含的位置执行输出
+    动态包含：
+        <jsp:include pade=""></jsp:include>
+        page属性：指定你要包含的jsp路径
+        动态包含也像静态包含一样，把被包含的内容执行输出到包含位置
+    动态包含特点：
+        1.动态包含会把包含的jsp页面也翻译成java代码
+        2.动态包含底层代码使用如下：
+            JspRuntimeLibrary.include(request)....
+jsp请求转发：
+    jsp:foreward page = ""
+    page设置请求转发的路径
+Listener是Javaweb的三大组件之一，Servlet程序，Filter过滤器，Listener监听器
+        Listener它是javaee的规范，就是接口
+——————————————————————————————————————————————————————————————————————————————————
+ServletContextListener 监听器
+Servlet Context在web工程启动时创建，在web工程停止的时候销毁
+ServletContextListener监听Servlet Context对象。
+使用步骤：
+    1.编写一个类去实现ServletContextListener
+    2.实现其两个回调方法
+    3.到web.xml中去配置监听器

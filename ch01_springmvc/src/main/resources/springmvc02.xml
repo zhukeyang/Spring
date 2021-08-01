@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://mybatis.org/schema/mybatis-spring
+        ">
+<!--    springmvc的配置文件-->
+    <context:component-scan base-package="controller"></context:component-scan>
+    <context:component-scan base-package="vo"></context:component-scan>
+    <!--    声明视图解析器:帮助处理视图
+-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<!--        前缀：指定视图文件的路径-->
+        <property name="prefix" value="WEB-INF/view/"/>
+<!--        后缀：试图文件的扩展名-->
+        <property name="suffix" value=".jsp"/>
+
+    </bean>
+<!--    声明注解驱动，创建HttpMessageConverter接口的7个实现类-->
+    <mvc:annotation-driven/>
+<!--
+        声明静态资源的第一种处理方式
+        <mvc:default-servlet-handler/>和@RequestMapping在使用时有冲突
+        加<mvc:annotation-driven/>解决冲突
+        1.声明静态资源的第一种处理方式：
+            创建DefaultServletHttpRequestHandler把接收的静态资源的地址，装发给Tomcat的default。
+                优点：
+                    解决方式简单
+                缺点：
+                    依赖于tomcat服务器提供的能力
+        2.第二种静态资源的处理方式：
+            在SpringMVC的配置文件中加入mvc:resources的标签，框架会创建ResourceHttpRequestHandler控制器对象
+            使用这个对象处理静态资源的访问，不依赖Tomcat服务器，推荐使用
+-->
+<!--    mapping:访问静态资源的url地址，可以使用通配符
+            **:表示任意的目录和目录资源名称
+        location:静态资源在项目中的位置，不要使用?WEB-INF目录
+-->
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/html/**" location="/html/"/>
+
+</beans>

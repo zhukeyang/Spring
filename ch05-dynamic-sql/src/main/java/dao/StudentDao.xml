@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+    <!-- 使用insert,update,delete,select等标签写sql-->
+    <!--使用parameterType限定dao接口形参的类型
+            这个属性的值可以使用java类型的全限定名称或者 mybatis定义的别名
+
+    通过日志
+    -->
+<!--    
+            定义代码片段
+
+-->
+    <sql id="selectStudent">
+        select * from student
+
+    </sql>
+    
+<!--
+    if的使用
+    test:对象的属性值作为条件
+-->
+    <select id="selectIf"  resultType="com.Student">    
+        <include refid="selectStudent"></include>
+        where
+        <if test="name !=null and name!=''">
+            name=#{name}
+        </if>
+        <if test="age>0">
+            or age=#{age}
+        </if>
+    </select>
+
+
+
+
+
+
+
+
+
+
+    <select id="selectAllStudents" resultType="com.Student">
+        select * from student order by id
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    where-->
+    <select id="selectWhere" resultType="com.Student">
+        select  * from student
+        <where>
+            <if test="name !=null and name!=''">
+                or name=#{name}
+            </if>
+            <if test="age>0">
+                or age &lt; #{age}
+            </if>
+        </where>
+    </select>
+<!--
+        foreach第一种
+-->
+    <select id="selectForeachOne" resultType="com.Student">
+        select * from student where id in
+        <foreach collection="list" open="(" close=")" item="myid" separator=",">
+            #{myid}
+        </foreach>
+    </select>
+<!--
+        foreach第二种
+-->
+    <select id="selectForeachTwo" resultType="com.Student">
+        select * from student where id in
+        <if test="list!=null and list.size>0">
+        <foreach collection="list" open="(" close=")" separator="," item="stu">
+            #{stu.id}
+        </foreach>
+        </if>
+</select>
+</mapper>

@@ -1,0 +1,4 @@
+filter的使用方法：
+    1.编写一个类去实现filter接口
+    2.实现过滤方法
+    3.到web.xml中去配置filter过滤器

@@ -1,0 +1,33 @@
+base标签的作用：
+    可以设置当前页面中所有相对路径工作时，参照哪个路径来进行跳转回去。
+web中/斜杠的不同意义：
+    /斜杠 如果被浏览器解析，得到的地址是：http://ip:port/
+        <a href>
+    /斜杠 如果被服务器解析，得到的地址是：http://ip:port/工程路径
+        <url-pattern>/servlet1<url-pattern>
+HttpServletResponse类：
+    每次请求进来，Tomcat都会创建一个Response对象传递给Servlet程序去使用，
+    HttpServletRequest表示请求过来的信息，HttpServletResponse表示所有响应的信息
+两个输出流的说明：
+    1.字节流
+        getOutStream()
+            常用于下载（传递二进制数据）
+    2.字符流
+        getWritter()
+            常用于回传字符串（常用）
+    两个流同时只能使用一个，使用了字节流，就不能使用字符流，反之亦然。否则就会报错
+如何往客户端回传数据：
+
+
+请求重定向：
+    客户端给服务器发请求，然后服务器告诉客户端说：给你一个新地址。你去新地址访问，叫请求
+    重定向(因为之前的地址可能已经被废弃)
+    响应码：302，并且告知新的地址：响应头 Location
+请求重定向的特点：
+    1.浏览器的状态栏会发生改变；
+    2.会有两次请求；
+    3.不共享Request域中的数据
+    4.不能访问WIB-INF目录下的资源
+    5.可以访问工程外的资源
+请求重定向的第二种方法：
+    resp.sendRedirect("www.baidu.com");

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    
+    
+    <typeAliases>
+        <package name="com.node.domain"/>
+    </typeAliases>
+    <!--mappers
+    指定其他mapper文件的位置
+    指定其他mapper文件的目的是找到其他文件的sql语句
+
+-->
+    <mappers>
+        <!--
+        可以使用resource属性指定mapper文件的路径
+        这个路径是从target/classes路径开始的
+        一个mapper指定一个mapper文件
+-->
+        <package name="com.node.dao"/>
+    </mappers>
+</configuration>

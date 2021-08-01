@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="atguigu.Car" id="car">
+        <property name="carName" value="宝马"></property>
+        <property name="color" value="白色"></property>
+    </bean>
+<!--    为Person里面的自定义类型赋值
+        property:手动赋值
+        自动赋值（自动装配）
+        autowire:自动装配
+        autowire="default/no":不自动装配，不自动为car赋值
+        按照某种规则自动分配
+        autowire="byName":根据名字
+            private Car car;以属性名作为id去容器中找到这个组件，给他赋值，如果找不到就装配null
+            car =ioc.getBean("car");
+        autowire="byType":根据类型
+            private Car car 以属性的类型去容器中查找组件;如果容器中有多种这样的组件，就会
+            car=ioc,getBean(Car.class)
+        autowire="constructor":根据构造器
+           pulic private (Car car)
+            1.先按照有参构造器的参数类型进行装配（成功则赋值），没有就为组件装配null；
+            2.如果按照类型找到多个；参数的名作为id继续匹配。找到就赋值，找不到就null；
+            3.不会报错
+           自动为属性赋值
+
+        -->
+    <bean class="atguigu.Person" id="person" autowire="byName">
+
+    </bean>
+<!--    SPEL测试-->
+    <bean class="atguigu.Person" id="person04">
+<!--        测试字面量:${};  #{}-->
+        <property name="age" value="#{12*5}"></property>
+        <property name="lastName" value="#{car.carName}"></property>
+    </bean>
+</beans>

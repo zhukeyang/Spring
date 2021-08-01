@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.atguigu.Car" id="car01">
+
+        <property name="carName" value="宝马"/>
+        <property name="price" value="30000"/>
+        <property name="color" value="黑色"/>
+    </bean>
+    <bean id="person01" class="com.atguigu.Person">
+        <!--        进行复杂的赋值-->
+        <property name="lastName" ><null/></property>
+<!--        对象我们可以使用bean标签创建 car=new Car();-->
+        <property name="car">
+            <bean class="com.atguigu.Car">
+                <property name="carName" value="宝马"></property>
+            </bean>
+        </property>
+<!--ref：引用外部元素-->
+    </bean>
+    <bean class="com.atguigu.Person" id="person02">
+        <property name="books">
+            <list>
+                <bean class="com.atguigu.Book">
+                    <property name="author" value="李信"></property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+<!--    Util名称空间创建集合类型的bean-->
+    <bean class="com.atguigu.Person">
+
+
+    </bean>
+<!--    级联属性赋值: 属性的属性-->
+    <bean class="com.atguigu.Person" id="person04">
+<!--        为car赋值的时候改一下价格-->
+        <property name="car" ref="car01"></property>
+        
+        <property name="car.price" value="10000"></property>
+
+    </bean>
+<!--   abstract="true"表示这个bean的配置是一个抽象的，不能获取实例，只能被别人用来继承 -->
+    <bean class="com.atguigu.Person" id="person05" abstract="true">
+
+        <property name="lastName" value="张三"/>
+        <property name="age" value="18"/>
+        <property name="gender" value="男"/>
+        <property name="email" value="1111@qq.com"/>
+    </bean>
+    <bean class="com.atguigu.Person" id="person06" parent="person05">
+        <property name="lastName" value="李四"/>
+
+    </bean>
+</beans>

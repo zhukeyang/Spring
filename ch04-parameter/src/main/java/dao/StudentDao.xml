@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+    <!-- 使用insert,update,delete,select等标签写sql-->
+    <!--使用parameterType限定dao接口形参的类型
+            这个属性的值可以使用java类型的全限定名称或者 mybatis定义的别名
+
+    通过日志
+    -->
+    <select id="selectById" resultType="com.Student">
+        select * from student where id =#{studentId}
+    </select>
+    <select id="selectByEmail" resultType="com.Student">
+        select id,name,age from student where email =#{studentEmail}
+    </select>
+    <!--
+        多个简单类型的参数
+        当使用了@Param明明后，例如@Param("myname")
+        在mapper中，使用#{命名的参数},例如#{myname}
+    -->
+    <select id="selectByNameOrAge" resultType="com.Student">
+        select * from student where name =#{myname} or age=#{myage}
+    </select>
+    <select id="selectByObject" resultType="com.Student">
+        select * from student where name=#{name} or age=#{age}
+    </select>
+    <select id="selectByQueryParam" resultType="com.Student">
+        select * from student where name=#{p1} or age=#{p2}
+    </select>
+<!--
+        列名和属性名一致就不用配置
+        使用resultMap属性，指定映射关系的id
+        id:给resultMap的映射关系起个名称，唯一值
+        type:java类型的全限定名称
+        resultMap和resultType不能同时用
+-->
+    <resultMap id="customMap" type="com.Student">
+        <id column="id" property="id"></id>
+    </resultMap>
+<!--
+        使用列的别名，解决列名和属性名不同的问题
+-->
+    <select id="selectByEmail02" resultType="com.Student">
+        select id as cid,name cname,age from student where email =#{studentEmail}
+    </select>
+<!--
+    like的第一种方法(推荐)
+-->
+    <select id="selectLikeOne" resultType="com.Student">
+        select * from student where name like #{name}
+    </select>
+</mapper>

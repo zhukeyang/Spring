@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://mybatis.org/schema/mybatis-spring
+        ">
+<!--springmvc的配置文件，声明Controller，视图解析器等，web等开发-->
+    <context:component-scan base-package="com.node.controller"></context:component-scan>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+<!--
+        声明拦截器
+--> 
+    <mvc:interceptors>
+<!--        
+        声明第一个拦截器
+--><!--      <mvc:mapping path=""/> 指定拦截器的拦截地址
+            path:拦截的url地址，使用**通配符，
+                 例如： path="/user/**"
+          <mvc:exclude-mapping path=""/>  不拦截的地址
+-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.handler.MyInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.handler">
+
+    </context:component-scan>
+    <mvc:annotation-driven/>
+</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--    bean之间的依赖，（只是改变创建的顺序）-->
+
+    <bean class="com.atguigu.Car" id="car" depends-on="person,book"></bean>
+    <bean class="com.atguigu.Book" id="book"></bean>
+    <bean class="com.atguigu.Person" id="person"></bean>
+
+<!--
+    组件被创建的先后顺序
+-->
+<!--
+    bean的作用域：指定bean是否单实例，xxx默认：单实例
+    prototype:多实例
+    singleton：单实例
+    不写，默认单实例
+    单实例的bean：
+        1.在容器启动之前就已经创建好对象了，保存到容器中了。
+        2.任何时候获取都是获取之前创建好的那个对象
+    多实例的bean:
+        1.容器启动默认不会去创建对象
+        2.获取的时候创建对象
+        3.每次获取都会创建新的对象
+-->
+<!--    <bean id="book" class="com.atguigu.Book" scope="singleton">-->
+
+<!--    </bean>-->
+<!--    bean的创建默认就是框架利用反射new出来的bean实例,-->
+<!--    工厂模式：工厂帮我们创建对象； 有一个专门帮我们创建对象的类，这个类就是工厂
+
+        AirPlane ap= AirPlaneFactor.getAirPlane(String jzName);
+        静态工厂：工厂本身不用创建对象，通过静态方法调用，对象=工厂类，工厂方法名（）
+        实例工厂：工厂本身需要创建对象：工厂类 对象=new 工厂类（）;
+                工厂类 工厂对象 = new 工厂类（）；
+                工厂类.getAirPlane("张三")
+-->
+<!--    静态工厂-->
+    <bean id="airPlane01" class="factory.AirPlaneStaticFactory" factory-method="getAirPlane">
+<!--class：指定静态工厂全类名
+    factory-method:指定工厂方法
+    constructor-arg:为方法传参
+    -->
+
+        <constructor-arg value="李信"/>
+    </bean>
+<!--    实力工厂:
+        factory-method:指定这个实例工厂中哪个方法是工厂方法
+-->
+    <bean class="factory.AirPlaneInstanceFactory" id="airPlaneInstanceFactory">
+
+    </bean>
+<!--
+    factory-bean:指定当前对象创建使用哪个工厂
+-->
+    <bean id="airPlane02" class="com.atguigu.AirPlane"
+          factory-bean="airPlaneInstanceFactory"
+          factory-method="getAirPlane">
+        <constructor-arg value="朱柯阳"/>
+    </bean>
+<!--    FactoryBean是spring规定的接口，只要是这个接口的实现类，
+        Spring都认为是一个工厂：
+        -->
+    <bean class="factory.MyFactoryBean"
+    id="factoryBean">
+
+    </bean>
+</beans>
